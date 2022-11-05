@@ -7,10 +7,15 @@ import { AuthContext } from '../../../Contexts/AuthProvider/AuthProvider';
 const Header = () => {
     const { user, logOut } = useContext(AuthContext);
     const menuItems = <>
-        <li className='font-semibold'>
-            <Link to='/'>Home</Link>
-            <Link to='/login'>Login</Link>
-        </li>
+        <li className='font-semibold'><Link to='/'>Home</Link></li>
+        {
+            user?.email ?
+                <>
+                    <li className='font-semibold'><Link to='/orders'>Orders</Link></li>
+                </>
+                :
+                <li className='font-semibold'><Link to='/login'>Login</Link></li>
+        }
     </>
     return (
         <div className="h-20 mb-12 pt-12 navbar bg-base-100">
@@ -51,7 +56,7 @@ const Header = () => {
                                         <span className="badge"></span>
                                     </a>
                                 </li>
-                                <li><Link  onClick={logOut}>Logout</Link></li>
+                                <li><Link onClick={logOut}>Logout</Link></li>
                             </ul>
                         </div>
                         :

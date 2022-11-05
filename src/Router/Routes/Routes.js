@@ -1,3 +1,4 @@
+import PrivateRoute from "../../Contexts/PrivateRoute/PrivateRoute";
 import Main from "../../Layouts/Main";
 import CheckOut from "../../Pages/CheckOut/CheckOut";
 import Home from "../../Pages/Home/Home/Home";
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/orders',
-                element: <Orders></Orders>
+                element: <PrivateRoute><Orders></Orders></PrivateRoute>
             }
         ]
     }
