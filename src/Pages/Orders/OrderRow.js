@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 
-const OrderRow = ({order, handleDelete}) => {
-    const {_id, serviceName, price, customer, phone, service} = order;
+const OrderRow = ({ order, handleDelete, handleStatusUpdate }) => {
+    const { _id, serviceName, price, customer, phone, service, status } = order;
     const [orderService, setOrderService] = useState({})
 
-    useEffect(()=>{
-        fetch( `http://localhost:5000/services/${service}`)
-        .then(res => res.json())
-        .then(data => setOrderService(data))
-        .catch(err => console.error(err))
-    },[service])
+    useEffect(() => {
+        fetch(`http://localhost:5000/services/${service}`)
+            .then(res => res.json())
+            .then(data => setOrderService(data))
+            .catch(err => console.error(err))
+    }, [service])
 
-    
+
     return (
 
         <tr>
             <th>
                 <label>
-                    <button onClick={()=> handleDelete(_id)} className='btn btn-ghost'>X</button>
+                    <button onClick={() => handleDelete(_id)} className='btn btn-ghost'>X</button>
                 </label>
             </th>
             <td>
@@ -25,10 +25,10 @@ const OrderRow = ({order, handleDelete}) => {
                     <div className="avatar">
                         <div className="rounded w-24 h-24">
                             {
-                                orderService?.img && 
+                                orderService?.img &&
                                 <img src={orderService?.img} alt="Repair Parts Imge" />
                             }
-                            
+
                         </div>
                     </div>
                     <div>
@@ -44,7 +44,9 @@ const OrderRow = ({order, handleDelete}) => {
             </td>
             <td>Blue</td>
             <th>
-                <button className="btn btn-ghost btn-xs">Details</button>
+                <button
+                    onClick={() => handleStatusUpdate(_id)}
+                    className="btn btn-ghost btn-xs">{status ? status : 'pending'}</button>
             </th>
         </tr>
     );

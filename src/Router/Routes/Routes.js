@@ -1,4 +1,4 @@
-import PrivateRoute from "../../Contexts/PrivateRoute/PrivateRoute";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Main from "../../Layouts/Main";
 import CheckOut from "../../Pages/CheckOut/CheckOut";
 import Home from "../../Pages/Home/Home/Home";
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
             },
             {
                 path:'/checkout/:id',
-                element: <CheckOut></CheckOut>,
+                element: <PrivateRoute><CheckOut></CheckOut></PrivateRoute>,
                 loader: ({params}) => fetch(`http://localhost:5000/services/${params.id}`)
             },
             {

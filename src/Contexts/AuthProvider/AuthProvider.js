@@ -21,15 +21,8 @@ const AuthProvider = ({ children }) => {
     // login with email and password 
     const userLogin = (email, password) => {
         setLoader(true);
-        signInWithEmailAndPassword(auth, email, password)
-            .then(result => {
-                const user = result.user;
-                console.log(user);
-                setUser(user);
-            })
-            .catch(error => {
-                console.error('error', error)
-            });
+        return signInWithEmailAndPassword(auth, email, password)
+          
     }
 
     // update profile 
@@ -64,6 +57,7 @@ const AuthProvider = ({ children }) => {
 
     const logOut = () => {
         setLoader(true)
+        localStorage.removeItem('genius-token')
         signOut(auth)
             .then(() => {
 
@@ -90,7 +84,8 @@ const AuthProvider = ({ children }) => {
         userLogin,
         signInGoogle,
         logOut,
-        userUpdate
+        userUpdate,
+        setUser
     }
 
     return (
