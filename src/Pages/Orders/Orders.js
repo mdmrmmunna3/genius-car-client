@@ -4,30 +4,33 @@ import OrderRow from './OrderRow';
 
 
 const Orders = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut, setLoading } = useContext(AuthContext);
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:5000/orders?email=${user?.email}`, {
+        fetch(`https://genius-car-server-seven-puce.vercel.app/orders?email=${user?.email}`, {
             headers: {
+                // 'content-type': 'application.json',
                 authorization: `Bearer ${localStorage.getItem('genius-token')}`
             }
         })
             .then(res => {
                 if (res.status === 401 || res.status === 403) {
+                    // setLoading(true)
                     return logOut();
                 }
                 return res.json();
             })
             .then(data => {
+                // console.log('recevied', data)
                 setOrders(data);
             })
-    }, [user?.email, logOut])
+    }, [user?.email, logOut, setLoading])
 
     const handleDelete = id => {
         const proceed = window.confirm('Are you sure, you want to cancel this order');
         if (proceed) {
-            fetch(`http://localhost:5000/orders/${id}`, {
+            fetch(`https://genius-car-server-seven-puce.vercel.app/orders/${id}`, {
                 method: 'DELETE',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('genius-token')}`
@@ -45,13 +48,13 @@ const Orders = () => {
     }
 
     const handleStatusUpdate = id => {
-        fetch(`http://localhost:5000/orders/${id}`, {
+        fetch(`https://genius-car-server-seven-puce.vercel.app/orders/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 authorization: `Bearer ${localStorage.getItem('genius-token')}`
             },
-            body: JSON.stringify({ status: 'Approved' })
+            body: JSON.stringify({status: 'Approved'})
         })
             .then(res => res.json())
             .then(data => {

@@ -7,7 +7,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 
 const SignUp = () => {
 
-    const { createUser, signInGoogle, userUpdate } = useContext(AuthContext);
+    const { createUser, setUser, signInGoogle, userUpdate } = useContext(AuthContext);
 
     const handleSignUp = event => {
         event.preventDefault();
@@ -21,7 +21,7 @@ const SignUp = () => {
             .then((result) => {
                 const user = result.user;
                 console.log(user);
-                // setUser(user);
+                setUser(user);
                 userUpdate(name)
             })
             .catch((error) => console.error(error))

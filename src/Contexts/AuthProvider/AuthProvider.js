@@ -8,32 +8,32 @@ const auth = getAuth(app)
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState({});
-    const [loading, setLoader] = useState(true);
+    const [loading, setLoading] = useState(true);
     const googleProvider = new GoogleAuthProvider();
 
     // create user
     const createUser = (email, password) => {
-        setLoader(true);
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password)
 
     }
 
     // login with email and password 
     const userLogin = (email, password) => {
-        setLoader(true);
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
           
     }
 
     // update profile 
     const userUpdate = (name, photoURL) => {
-        setLoader(true);
+        setLoading(true);
         updateProfile(auth.currentUser, {
             displayName: name,
             photoURL: photoURL
         })
             .then((result) => {
-                const user = result.user;
+                const user = result?.user;
                 setUser(user);
             })
             .catch((error) => console.error('error', error));
@@ -41,7 +41,7 @@ const AuthProvider = ({ children }) => {
 
     // signup google
     const signInGoogle = () => {
-        setLoader(true);
+        setLoading(true);
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
@@ -56,7 +56,6 @@ const AuthProvider = ({ children }) => {
     // logOut
 
     const logOut = () => {
-        setLoader(true)
         localStorage.removeItem('genius-token')
         signOut(auth)
             .then(() => {
@@ -69,7 +68,7 @@ const AuthProvider = ({ children }) => {
         const unsubsrcibe = onAuthStateChanged(auth, (currentUser) => {
             // console.log(currentUser);
             setUser(currentUser);
-            setLoader(false);
+            setLoading(false);
         });
 
         return () => {
@@ -85,7 +84,8 @@ const AuthProvider = ({ children }) => {
         signInGoogle,
         logOut,
         userUpdate,
-        setUser
+        setUser,
+         setLoading
     }
 
     return (

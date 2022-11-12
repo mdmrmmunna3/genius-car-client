@@ -20,15 +20,14 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
 
-
                 const currentUser = {
-                    email: user.email
+                    email: user?.email
                 }
 
                 console.log(currentUser);
 
                 // get jwt token
-                fetch('http://localhost:5000/jwt', {
+                fetch('https://genius-car-server-seven-puce.vercel.app/jwt', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
